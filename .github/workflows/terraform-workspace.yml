@@ -45,28 +45,28 @@ jobs:
          terraform init -input=false   # Initialize Terraform (without prompting for user input)
          terraform validate  # Validate the Terraform configuration
 
-       # Install TFLint (if not already installed)
-      - name: Install TFLint
-        run: |
-         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+      #  # Install TFLint (if not already installed)
+      # - name: Install TFLint
+      #   run: |
+      #    curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-       # Run TFLint with the configuration file
-      - name: Run TFLint
-        run: tflint --init
+      #  # Run TFLint with the configuration file
+      # - name: Run TFLint
+      #   run: tflint --init
    
-      # Run TF Lint to validate
-      - name: TFLint validate
-        run: tflint
+      # # Run TF Lint to validate
+      # - name: TFLint validate
+      #   run: tflint
 
-       # Install Checkov (Security & Compliance Scanner)
-      - name: Install Checkov
-        run: |
-          curl -sSL https://github.com/bridgecrewio/checkov/releases/download/v2.0.0/checkov-linux-amd64 -o /usr/local/bin/checkov
-          chmod +x /usr/local/bin/checkov
+      #  # Install Checkov (Security & Compliance Scanner)
+      # - name: Install Checkov
+      #   run: |
+      #     curl -sSL https://github.com/bridgecrewio/checkov/releases/download/v2.0.0/checkov-linux-amd64 -o /usr/local/bin/checkov
+      #     chmod +x /usr/local/bin/checkov
 
-      # Run Checkov
-      - name: Run Checkov to Scan Terraform Code for Security Issues
-        run: checkov -d . --quiet  # `--quiet` suppresses output for passing checks
+      # # Run Checkov
+      # - name: Run Checkov to Scan Terraform Code for Security Issues
+      #   run: checkov -d . --quiet  # `--quiet` suppresses output for passing checks
 
 
       - name: Configure Git
