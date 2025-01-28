@@ -4,8 +4,8 @@ provider "aws" {
 
 module "vpc" {
   source      = "../common"
-  vpc_cidr    = var.vpc_cidr
-  subnet_cidr = var.subnet_cidr
+#  vpc_cidr    = var.vpc_cidr
+ # subnet_cidr = var.subnet_cidr
 }
 
 module "ec2_instance" {
@@ -16,6 +16,6 @@ module "ec2_instance" {
 
 module "rds" {
   source       = "../common"
-  db_username  = "admin"
-  db_password  = "password"
+#  db_username  = "admin"
+#  db_password  = "password"
 }
