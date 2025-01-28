@@ -1,6 +1,6 @@
 vpc_cidr     = "10.0.0.0/16"
 subnet_cidr  = "10.0.1.0/24"
-ami_id       = "ami-xyz"  # Example: Replace with an actual Dev AMI ID
-instance_type = "t2.micro"  # Smaller instance type for Dev
+ami      = "ami-0e2c8caa4b6378d8c"
+instance_type = "t2.micro" 
 db_username  = "devadmin"
 db_password  = "devpassword"
