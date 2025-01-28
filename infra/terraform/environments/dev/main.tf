@@ -10,8 +10,8 @@ provider "aws" {
 
 module "ec2_instance" {
   source      = "../common"
-  ami_value   = var.ami
-  instance_type = var.instance_type
+  ami_value   = "ami-0e2c8caa4b6378d8c"
+  instance_type = "t2.micro"
 }
 
 # module "rds" {
