@@ -38,10 +38,15 @@ jobs:
           pwd
           terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
 
+      - name: Terraform plan (Dev)
+        run: |
+          cd infra/terraform/environments/dev
+          terraform plan -var-file="terraform.tfvars"     
+     
       - name: Terraform Apply (Dev)
         run: |
           cd infra/terraform/environments/dev
-          terraform apply -auto-approve               # -var-file="terraform.tfvars"
+          terraform apply -auto-approve -var-file="terraform.tfvars"
 
       # - name: Terraform Init (Stage)
       #   run: |
