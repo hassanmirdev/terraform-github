@@ -36,8 +36,7 @@ jobs:
         run: |
           cd infra/terraform/environments/dev
           pwd
-          terraform init
-          #terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
+          terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
 
       - name: Terraform Apply (Dev)
         run: |
