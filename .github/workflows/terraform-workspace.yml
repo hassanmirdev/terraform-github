@@ -1,0 +1,110 @@
+name: Working with Multiple Environments
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to deploy (dev, staging, production)'
+        required: true
+       # default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-workspace:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}  # Reference the environment from the input
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: 'main'
+
+      # Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: 1.10.3  # 
+          
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: "us-east-1"
+        # Terraform validate
+      - name: Run Terraform Validate
+        run: |                                
+         rm -rf .terraform
+         terraform init -input=false   # Initialize Terraform (without prompting for user input)
+         terraform validate  # Validate the Terraform configuration
+
+       # Install TFLint (if not already installed)
+      - name: Install TFLint
+        run: |
+         curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+       # Run TFLint with the configuration file
+      - name: Run TFLint
+        run: tflint --init
+   
+      # Run TF Lint to validate
+      - name: TFLint validate
+        run: tflint
+
+       # Install Checkov (Security & Compliance Scanner)
+      - name: Install Checkov
+        run: |
+          curl -sSL https://github.com/bridgecrewio/checkov/releases/download/v2.0.0/checkov-linux-amd64 -o /usr/local/bin/checkov
+          chmod +x /usr/local/bin/checkov
+
+      # Run Checkov
+      - name: Run Checkov to Scan Terraform Code for Security Issues
+        run: checkov -d . --quiet  # `--quiet` suppresses output for passing checks
+
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "hassan.mirsf@gmail.com"
+          git config --global user.name "hassanmirdev"
+      
+      # Initialize Terraform
+      - name: Initialize Terraform
+        run: |
+          rm -rf .terraform
+          terraform init
+
+      # Select Terraform Workspace Dynamically.
+      - name: Select Terraform Workspace
+        run: |
+          terraform workspace show
+          terraform workspace select ${{ github.event.inputs.environment }} || terraform workspace new ${{ github.event.inputs.environment }}
+
+
+      # Generate Terraform Plan
+      - name: Generate Terraform Plan
+        run: terraform plan -out=tfplan
+
+      
+       # Generate Markdown with Terraform Docs
+      - name: Generate Markdown with Terraform Docs
+        uses: terraform-docs/gh-actions@v1.3.0
+        with:
+          working-dir: .
+          output-file: README.md
+          output-method: inject
+          git-push: "true"
+          git-push-user-name: "hassanmirdev"
+          git-push-user-email: "hassan.mirsf@gmail.com"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Apply the Terraform configuration to AWS
+      - name: Apply Terraform Configuration
+        run: terraform apply -auto-approve tfplan
