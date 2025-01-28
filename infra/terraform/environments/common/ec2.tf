@@ -7,7 +7,7 @@ resource "aws_instance" "example" {
     instance_type = var.instance_type
   #  subnet_id = aws_subnet.subnet_a.id
 
-    tags = {
-                Name = "WebServer"
-          }
+  #  tags = {
+   #             Name = "WebServer"
+    #      }
 }
