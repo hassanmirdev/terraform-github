@@ -23,7 +23,7 @@ variable "instance_type" {
 }
 
 module "ec2_instance" {
-  source        = "./infra/terraform/compute"
+  source        = "/infra/terraform/compute"
   ami           = var.ami
   instance_type = lookup(var.instance_type, terraform.workspace, "t2.nano")
 }
