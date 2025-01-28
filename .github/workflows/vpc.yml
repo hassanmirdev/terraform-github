@@ -41,7 +41,7 @@ jobs:
       - name: Terraform plan (Dev)
         run: |
           cd infra/terraform/environments/dev
-          terraform plan -var-file="terraform.tfvars"     
+          terraform plan                       # -var-file="terraform.tfvars"     
      
       - name: Terraform Apply (Dev)
         run: |
