@@ -1,6 +1,6 @@
 resource "aws_db_instance" "example" {
   allocated_storage     = 20
-  db_instance_class     = "db.t2.micro"
+  db_instance_class     = "db.t4g.micro"
   engine                = "mysql"
   engine_version        = "8.0"
   name                  = "exampledb"
