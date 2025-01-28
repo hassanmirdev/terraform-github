@@ -10,7 +10,7 @@ module "vpc" {
 
 module "ec2" {
   source       = "../common"
-  ami          = var.ami
+  ami           = var.ami
   instance_type = var.instance_type
 }
 
