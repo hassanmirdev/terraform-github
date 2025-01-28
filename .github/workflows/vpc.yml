@@ -25,10 +25,17 @@ jobs:
         run: |
           git config --global user.email "hassan.mirsf@gmail.com"
           git config --global user.name "hassanmirdev"
+
+      - name: Print working directory
+        run: pwd
+
+      - name: List files in the directory
+        run: ls -R infra/terraform/environments/
       
       - name: Terraform Init (Dev)
         run: |
           cd infra/terraform/environments/dev
+          pdw
           terraform init
           #terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
 
