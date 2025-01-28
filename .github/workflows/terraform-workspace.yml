@@ -89,8 +89,7 @@ jobs:
 
       # Generate Terraform Plan
       - name: Generate Terraform Plan
-        run: terraform plan -out=tfplan ./infra/terraform/modules
-        #run: terraform plan -out=tfplan
+        run: terraform plan -out=tfplan
 
       
        # Generate Markdown with Terraform Docs
