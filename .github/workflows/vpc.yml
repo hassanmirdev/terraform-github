@@ -26,32 +26,78 @@ jobs:
           git config --global user.email "hassan.mirsf@gmail.com"
           git config --global user.name "hassanmirdev"
       
-      # Initialize Terraform
-      - name: Initialize Terraform
+      - name: Terraform Init (Dev)
         run: |
-          rm -rf .terraform
+          cd infra/environment/dev
           terraform init
+          #terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
 
-      # Generate Terraform Plan
-      - name: Generate Terraform Plan
-        run: terraform plan
+      - name: Terraform Apply (Dev)
+        run: |
+          cd infra/environment/dev
+          terraform apply -auto-approve -var-file="terraform.tfvars"
 
-      #  run: terraform plan -out=tfplan
+      # - name: Terraform Init (Stage)
+      #   run: |
+      #     cd infra/environment/stage
+      #     terraform init
+
+      # - name: Terraform Apply (Stage)
+      #   run: |
+      #     cd terraform/stage
+      #     terraform apply -auto-approve -var-file="terraform.tfvars"
+
+      # - name: Terraform Init (Prod)
+      #   run: |
+      #     cd terraform/prod
+      #     terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=prod.tfstate"
+
+      # - name: Terraform Apply (Prod)
+      #   run: |
+      #     cd terraform/prod
+      #     terraform apply -auto-approve -var-file="terraform.tfvars"
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      # # Initialize Terraform
+      # - name: Initialize Terraform
+      #   run: |
+      #     rm -rf .terraform
+      #     terraform init
+
+      # # Generate Terraform Plan
+      # - name: Generate Terraform Plan
+      #   run: terraform plan
+
+      # #  run: terraform plan -out=tfplan
 
       
-      #  # Generate Markdown with Terraform Docs
-      # - name: Generate Markdown with Terraform Docs
-      #   uses: terraform-docs/gh-actions@v1.3.0
-      #   with:
-      #     working-dir: .
-      #     output-file: README.md
-      #     output-method: inject
-      #     git-push: "true"
-      #     git-push-user-name: "hassanmirdev"
-      #     git-push-user-email: "hassan.mirsf@gmail.com"
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      # #  # Generate Markdown with Terraform Docs
+      # # - name: Generate Markdown with Terraform Docs
+      # #   uses: terraform-docs/gh-actions@v1.3.0
+      # #   with:
+      # #     working-dir: .
+      # #     output-file: README.md
+      # #     output-method: inject
+      # #     git-push: "true"
+      # #     git-push-user-name: "hassanmirdev"
+      # #     git-push-user-email: "hassan.mirsf@gmail.com"
+      # #   env:
+      # #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # Apply the Terraform configuration to AWS
-      - name: Apply Terraform Configuration
-        run: terraform apply -auto-approve tfplan
+      # # Apply the Terraform configuration to AWS
+      # - name: Apply Terraform Configuration
+      #   run: terraform apply -auto-approve tfplan
