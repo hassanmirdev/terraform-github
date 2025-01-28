@@ -73,6 +73,13 @@ jobs:
         run: |
           git config --global user.email "hassan.mirsf@gmail.com"
           git config --global user.name "hassanmirdev"
+      - name: install lfs
+        run: |
+         git lfs install
+         git lfs track ".terraform/**/*"
+         git add .gitattributes
+         git commit -m "Add .terraform files to Git LFS"
+         git push origin main
       
       # Initialize Terraform
       - name: Initialize Terraform
