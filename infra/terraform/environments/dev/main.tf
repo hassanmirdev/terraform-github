@@ -8,9 +8,9 @@ module "vpc" {
   subnet_cidr = var.subnet_cidr
 }
 
-module "ec2" {
-  source = "../common"
-  ami = var.ami
+module "ec2_instance" {
+  source      = "../common"
+  ami         = var.ami
   instance_type = var.instance_type
 }
 
