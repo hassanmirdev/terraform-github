@@ -10,8 +10,8 @@ module "vpc" {
 
 module "ec2_instance" {
   source      = "../common"
-  ami         = var.ami
-  instance_type = var.instance_type
+#  ami         = var.ami
+#  instance_type = var.instance_type
 }
 
 module "rds" {
