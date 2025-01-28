@@ -7,8 +7,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          ref: 'main'
 
       # Set up Terraform
       - name: Set up Terraform
@@ -36,7 +34,7 @@ jobs:
 
       # Generate Terraform Plan
       - name: Generate Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan
 
       #  run: terraform plan -out=tfplan
 
