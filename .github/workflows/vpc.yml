@@ -28,13 +28,13 @@ jobs:
       
       - name: Terraform Init (Dev)
         run: |
-          cd infra/environment/dev
+          cd infra/terraform/environment/dev
           terraform init
           #terraform init -backend-config="bucket=${{ secrets.TF_BUCKET_NAME }}" -backend-config="key=dev.tfstate"
 
       - name: Terraform Apply (Dev)
         run: |
-          cd infra/environment/dev
+          cd infra/terraform/environment/dev
           terraform apply -auto-approve -var-file="terraform.tfvars"
 
       # - name: Terraform Init (Stage)
