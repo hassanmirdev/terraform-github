@@ -1,4 +1,5 @@
 variable "ami" {
+  type = string
   description = "The AMI to use for the EC2 instance"
 }
 
