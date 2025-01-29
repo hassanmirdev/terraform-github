@@ -1,4 +1,5 @@
 variable "ami" {
+  type = "string"
   description = "This is AMI for the instance"
 }
 
