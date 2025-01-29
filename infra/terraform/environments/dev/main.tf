@@ -1,21 +1,18 @@
 provider "aws" {
-  region = "us-east-1"
+ region = "us-east-1"
 }
-
-# module "vpc" {
- # source      = "../common"
- # vpc_cidr    = var.vpc_cidr
- # subnet_cidr = var.subnet_cidr
-#}
-
+module "vpc" {
+ source = "./modules/vpc"
+ vpc_cidr = "10.0.0.0/16"
+ subnet_a_cidr = "10.0.1.0/24"
+ subnet_b_cidr = "10.0.2.0/24"
+}
 module "ec2_instance" {
-  source      = "../common"
-  ami_value   = "ami-0e2c8caa4b6378d8c"
-  instance_type = "t2.micro"
+ source = "./modules/ec2_instance"
+ ami_value = "ami-0e2c8caa4b6378d8c"
+ instance_type_value = "t2.micro"
+ #vpc_id = module.vpc.vpc_id
 }
-
-# module "rds" {
- # source       = "../common"
- # db_username  = var.db_username
- # db_password  = var.db_password
-#}
+output "public-ip-address" {
+ value = module.ec2_instance.public-ip-address
+}
